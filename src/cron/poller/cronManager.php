@@ -35,7 +35,7 @@ require_once('../../rest/v1.0/lib/counts.php');
 use \ElasticSearch\Client;
 use \Aws\S3\S3Client;
 
-$clientObject = getClients();
+#$clientObject = getClients();
 
 function getData($size){
 	$index = "app";
@@ -610,7 +610,9 @@ function getPersonalFeed(){
 	
 	for($h=0; $h < count($accts); $h++){
 		$feed = linkedInFetchWithParams('GET', '/v1/people/~/network/updates', $accts[$h]['accessToken'], 0, 100);
-
+		
+		print_r($feed);
+		
 		$feed = objectToArray($feed);
 		normalizeLinkedinObj($feed['values'], $accts[$h]);
 	}
@@ -778,20 +780,20 @@ if(!file_exists("../../lockFiles/cronManager.lock") || (time() > filemtime("../.
 		echo "linkedin feed"; ?><br/><?php
 		getPersonalFeed();
 
-		echo "facebook feed"; ?><br/><?php
-		getUserNewsFeed();
+	//	echo "facebook feed"; ?><br/><?php
+	//	getUserNewsFeed();
 
-		echo "calling twitter stuff";?><br/><?php
-		getUserTimeline();
+	//	echo "calling twitter stuff";?><br/><?php
+	//	getUserTimeline();
 
-		echo "instagram feed"; ?><br/><?php
-		getUserFeed();
+	//	echo "instagram feed"; ?><br/><?php
+	//	getUserFeed();
 
-		echo "linkedin feed"; ?><br/><?php
+	//	echo "linkedin feed"; ?><br/><?php
 		getDiscussionObjects();
 		
-		echo "google feed"; ?><br/><?php
-		getGoogleFeed();
+	//	echo "google feed"; ?><br/><?php
+	//	getGoogleFeed();
 
 	}
 	unlink("../../lockFiles/cronManager.lock");
